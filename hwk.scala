@@ -66,20 +66,21 @@ def readStudentFiles(courseName : String) : (Array[String], Array[String], Array
     (IDs, last, first)
 }
  
-def readGradeFiles(courseName : String) : Array[(String,Int,Int)] = {
-    val studentids = readStudentFiles(0)
-    val students = parseCSVHeader(studentids)
-    val courseFileName = "$students$courseName.data"
+def readGradeFiles(studentids : String, courseName : String) : Array[(String,Int,Int)] = {
+    val courseFileName = s"$studentids"+ s"courseName.data"
     val file = Source.fromFile(courseFileName)
-    val gradefiles = Array[(String,Int,Int)]
+    val gradefiles = Array[(String,Int,Int)]()
+    var i =0
     for(line <- file.getLines) {
         val parts = parseCSVHeader(line)
-        gradefiles = gradefiles :+(parts(0). parts(1).toInt,parts(2).toInt)
+        gradefiles(i) = (parts(0), parts(1).toInt, parts(2).toInt)
     }
     gradefiles
     }
     
 }
+
+
     
 
                     
