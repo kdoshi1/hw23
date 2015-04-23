@@ -66,19 +66,39 @@ def readStudentFiles(courseName : String) : (Array[String], Array[String], Array
     (IDs, last, first)
 }
  
-def readGradeFiles(studentids : String, courseName : String) : Array[(String,Int,Int)] = {
-    val courseFileName = s"$studentids"+ s"courseName.data"
-    val file = Source.fromFile(courseFileName)
-    val gradefiles = Array[(String,Int,Int)]()
-    var i =0
-    for(line <- file.getLines) {
-        val parts = parseCSVHeader(line)
-        gradefiles(i) = (parts(0), parts(1).toInt, parts(2).toInt)
-    }
-    gradefiles
+def val CourseName = "comp170"
+    val categories = readCategoryFile(CourseName)
+    val students = readStudentFiles(CourseName)
+    
+    def doGrading(courseName : String, categories : (Int, Array[String], Array[Int], Array[Int]), students : (Array[String], Array[String], Array[String])) : (Array[String], Array[Int], Array[Double]) = {
+        val studentid = students._1
+        var i = 0
+        for (i <- 0 to studentid.length-1)
+            studentid(i)
+            val courseFileName = s"$studentid" + s"$courseName.data"
+            val file = Source.fromFile(courseFileName)
+            val n = file.getLines.length
+            var k = 0
+            val assignmentName = Array.ofDim[String](n)
+            val sum = Array.ofDim[Double](categories._1)
+            for (line <- file.getLines) {
+                val parts = parseCSVHeader(line)
+                assignmentName(k) = parts(0)
+            }
+                val lines = file.getLines
+                val quantity = lines.next
+                val quantityArray = parseCSVRowOfInts(quantity, -1)
+                val score = lines.next
+                val scoreArray = parseCSVRowOfDoubles(score, -1)
+        (assignmentName, quantityArray, scoreArray)
     }
     
-}
+    
+    
+       
+    }
+    
+
 
 
     
